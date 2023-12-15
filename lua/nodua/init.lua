@@ -40,12 +40,26 @@ local make_display = function(entry)
 end
 
 local spawnTerminal = function(entry)
-  require("nvchad.term").toggle({
-    pos = "sp",
-    id = "htoggleterm",
-    size = 0.3,
-    cmd = "npm run " .. entry.name,
-  })
+  local buf = vim.api.nvim_create_buf(false, true)
+  vim.cmd("sp")
+  local win = vim.api.nvim_get_current_win()
+
+  vim.wo[win].number = false
+  vim.wo[win].relativenumber = false
+  vim.wo[win].foldcolumn = "0"
+  vim.wo[win].signcolumn = "no"
+  vim.bo[buf].buflisted = false
+
+  local size = vim.o["lines"] * 0.35
+  vim.api.nvim_win_set_height(0, math.floor(size))
+  vim.api.nvim_win_set_buf(win, buf)
+  local shell = vim.o.shell
+  local cmd = {
+    shell,
+    "-c",
+    "npm run " .. entry.command,
+  }
+  vim.fn.termopen(cmd)
 end
 
 local nodua = function(opts)
