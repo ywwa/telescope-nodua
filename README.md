@@ -1,14 +1,28 @@
-# telescope-nodua
-simple telescope.nvim plugin to run node scripts
+# telescope-nodua 
 
+simple telescope extesion to run node scripts
 
-### dependencies
-* nvim-telescope/[telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)
+yet not fully finnished yet
 
-### installation
-using lazy:
+## Usage
+
+1. Open using command `:Telescope nodua`
+2. Select desired script and press enter
+
+To hide terminal just repeat same process (TODO: add mapping)
+
+#### Dependencies
+
+self explanatory dependency
+
+- nvim-telescope/[telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)
+
+### Installation
+
+#### Lazy:
 
 add as a dependency
+
 ```lua
 {
   "nvim-telescope/telescope.nvim",
@@ -16,10 +30,14 @@ add as a dependency
   dependencies = { "ywwa/telescope-nodua" }
 }
 ```
+
 then load it using
+
 ```lua
 require('telescope').load_extension('nodua')
 ```
 
-### todo
-* add option to override `spawnTerminal(entry)` function
+### Todo
+
+- add option to override `toggle(opts)` function
+- add mapping to hide opened terminal
