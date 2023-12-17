@@ -53,7 +53,6 @@ M.terminal = {
     opts.id = opts.id .. "_" .. opts.entry.name
 
     if not vim.g.noduaTerms["noduaTerm" .. "_" .. opts.entry.name] then
-      print("noduaTerm_" .. opts.entry.name .. " not found")
       vim.fn.termopen({
         vim.o.shell,
         "-c",
