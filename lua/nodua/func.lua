@@ -52,7 +52,9 @@ M.terminal = {
 
     opts.id = opts.id .. "_" .. opts.entry.name
 
-    if not vim.g.noduaTerms["noduaTerm" .. "_" .. opts.entry.name] then
+    local term = vim.g.noduaTerms["noduaTerm_" .. opts.entry.name]
+
+    if not term or not vim.api.nvim_buf_is_valid(term.bufnr) then
       vim.fn.termopen({
         vim.o.shell,
         "-c",
