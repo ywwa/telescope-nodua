@@ -7,29 +7,6 @@ local action_state = require("telescope.actions.state")
 local func = require("nodua.func")
 local M = {}
 
-local spawnTerminal = function(entry)
-  local buf = vim.api.nvim_create_buf(false, true)
-  vim.cmd("sp")
-  local win = vim.api.nvim_get_current_win()
-
-  vim.wo[win].number = false
-  vim.wo[win].relativenumber = false
-  vim.wo[win].foldcolumn = "0"
-  vim.wo[win].signcolumn = "no"
-  vim.bo[buf].buflisted = false
-
-  local size = vim.o["lines"] * 0.35
-  vim.api.nvim_win_set_height(0, math.floor(size))
-  vim.api.nvim_win_set_buf(win, buf)
-  local shell = vim.o.shell
-  local cmd = {
-    shell,
-    "-c",
-    "npm run " .. entry.command,
-  }
-  vim.fn.termopen(cmd)
-end
-
 local nodua = function(opts)
   opts = opts or {}
   pickers
@@ -52,7 +29,13 @@ local nodua = function(opts)
         actions.select_default:replace(function()
           local entry = action_state.get_selected_entry()
           actions.close(bufnr)
-          func.terminal.toggle({ entry = entry, id = "noduaTerm" })
+          func.terminal.toggle({
+            entry = {
+              name = entry.name,
+              command = entry.command,
+            },
+            id = "noduaTerm",
+          })
         end)
         return true
       end,
